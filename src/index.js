@@ -16,27 +16,56 @@ const Header = () => (
 )
 
 class AddNote extends React.Component {
+  constructor(props){
+    super(props)
+    this.showKey = this.showKey.bind(this)
+    this.hashWord = ''
+    this.recording = false
+
+    this.state = {
+      hashWord: ''
+    }
+  }
+
   addNote(e) {
     e.preventDefault()
     const note = e.target.elements.note.value;
     console.log(note)
     e.target.elements.note.value = ''
   }
-  showKey(e) {
-    let input = e.target.value
-    input = input[input.length -1]
-    console.log('key get', input)
 
-    if(input === '#'){
-      console.log('hashntime!!')
+  showKey(e) {
+    const input = e.target.value
+    const character = input[input.length-1]
+
+    if(character === '#' && !this.recording){
+      this.recording = true
     }
+
+    if(character === ' ' && this.recording){
+      console.log('state hashword ', this.state.hashWord)
+      this.recording = false
+
+      //now i think the idea is to actually print out the new hashWord to the screen
+      this.setState(() => ({
+        hashWord: this.hashWord
+      }))
+      this.hashWord = ''
+      console.log(this.state.hashWord)
+    }
+
+    if(this.recording){
+      this.hashWord += character
+    }
+
+
   }
 
   render() {
     return (
       <div>
         <form onSubmit={this.addNote}>
-          <textarea name="note" onKeyUp={this.showKey}/>
+          <textarea name="note" onKeyDown={this.showKey}/>
           <br />
           <button type="submit">add</button>
         </form>
@@ -51,8 +80,10 @@ class TangerineNotes extends React.Component {
       <div>
         <Header />
         <div className="container" style={{ marginTop: "15px"}}>
-          <h4>Tangerine Notes <span role="img" alt="tangerine emoji" aria-label="tangerine emoji">🍊</span></h4>
-          <AddNote />
+          <h4>Tangerine Notes
+            <span role="img" alt="tangerine emoji" aria-label="tangerine emoji">🍊</span>
+          </h4>
+          <AddNote/>
         </div>
       </div>
     )
