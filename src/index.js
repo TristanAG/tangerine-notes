@@ -6,6 +6,50 @@ import './css/style.css';
 import registerServiceWorker from './registerServiceWorker';
 // import App from './App';
 
+class TangerineNotes extends React.Component {
+  constructor(props){
+    super(props)
+    this.addHashWord = this.addHashWord.bind(this)
+
+    this.state = {
+      hashedWords: 'hey'
+    }
+  }
+
+  addHashWord(hashWord) {
+    console.log('in add hashWord', hashWord)
+    this.setState(() => ({
+      hashedWords: hashWord
+    }))
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <div className="container" style={{ marginTop: "15px"}}>
+          <div className="row">
+          <h4>Tangerine Notes
+            <span role="img" alt="tangerine emoji" aria-label="tangerine emoji">🍊</span>
+          </h4>
+          </div>
+          <div className="row">
+            <div className="columns six">
+              <AddNote addHashWord={this.addHashWord}/>
+            </div>
+            <div className="columns six">
+              <p>test</p>
+              <p>{this.state.hashedWords}</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+
 const Header = () => (
   <header>
     <div className="container">
@@ -19,12 +63,17 @@ class AddNote extends React.Component {
   constructor(props){
     super(props)
     this.showKey = this.showKey.bind(this)
+    this.startAddHashWord = this.startAddHashWord.bind(this)
     this.hashWord = ''
     this.recording = false
 
     this.state = {
-      hashWord: ''
+      newHashWord: ''
     }
+  }
+
+  startAddHashWord(hashWord) {
+    this.props.addHashWord(hashWord)
   }
 
   addNote(e) {
@@ -43,15 +92,17 @@ class AddNote extends React.Component {
     }
 
     if(character === ' ' && this.recording){
-      console.log('state hashword ', this.state.hashWord)
+
       this.recording = false
 
+      console.log('in showKey function', this.hashWord)
+      this.startAddHashWord(this.hashWord)
       //now i think the idea is to actually print out the new hashWord to the screen
-      this.setState(() => ({
-        hashWord: this.hashWord
-      }))
+      // this.setState(() => ({
+      //   newHashWord: this.hashWord
+      // }))
       this.hashWord = ''
-      console.log(this.state.hashWord)
+
     }
 
     if(this.recording){
@@ -65,6 +116,9 @@ class AddNote extends React.Component {
     return (
       <div>
         <form onSubmit={this.addNote}>
+          {/*could i add further improvement by only firing onkeydown if recording?
+            probably not worth it to fuck around with that too much right now just because i'm still needing to figure out the structure of the app and what it's really gonna do
+            */}
           <textarea name="note" onKeyDown={this.showKey}/>
           <br />
           <button type="submit">add</button>
@@ -74,21 +128,7 @@ class AddNote extends React.Component {
   }
 }
 
-class TangerineNotes extends React.Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <div className="container" style={{ marginTop: "15px"}}>
-          <h4>Tangerine Notes
-            <span role="img" alt="tangerine emoji" aria-label="tangerine emoji">🍊</span>
-          </h4>
-          <AddNote/>
-        </div>
-      </div>
-    )
-  }
-}
+
 
 ReactDOM.render(<TangerineNotes />, document.getElementById('root'));
 registerServiceWorker();
