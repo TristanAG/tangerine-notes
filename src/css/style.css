@@ -8,3 +8,15 @@ hr {
 
 h4 {
   color: #665d57; }
+
+textarea {
+  width: 100%;
+  height: 120px; }
+  textarea:focus {
+    border: 1px solid #ffc993; }
+
+.hash-word {
+  color: #ffa751;
+  margin-right: 8px;
+  font-size: .9em;
+  display: inline; }

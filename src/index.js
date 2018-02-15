@@ -6,20 +6,27 @@ import './css/style.css';
 import registerServiceWorker from './registerServiceWorker';
 // import App from './App';
 
+
+
+
 class TangerineNotes extends React.Component {
   constructor(props){
     super(props)
     this.addHashWord = this.addHashWord.bind(this)
 
     this.state = {
-      hashedWords: 'hey'
+      hashedWords: [
+        '#yoga',
+        '#thirdeye',
+        '#health'
+      ]
     }
   }
 
   addHashWord(hashWord) {
     console.log('in add hashWord', hashWord)
-    this.setState(() => ({
-      hashedWords: hashWord
+    this.setState((prevState) => ({
+      hashedWords: prevState.hashedWords.concat(hashWord)
     }))
   }
 
@@ -38,9 +45,9 @@ class TangerineNotes extends React.Component {
               <AddNote addHashWord={this.addHashWord}/>
             </div>
             <div className="columns six">
-              <p>test</p>
-              <p>{this.state.hashedWords}</p>
-
+              {this.state.hashedWords.map((hashWord) => (
+                <p key={hashWord} className="hash-word">{hashWord}</p>
+              ))}
             </div>
           </div>
         </div>
@@ -62,7 +69,7 @@ const Header = () => (
 class AddNote extends React.Component {
   constructor(props){
     super(props)
-    this.showKey = this.showKey.bind(this)
+    this.getKey = this.getKey.bind(this)
     this.startAddHashWord = this.startAddHashWord.bind(this)
     this.hashWord = ''
     this.recording = false
@@ -83,7 +90,7 @@ class AddNote extends React.Component {
     e.target.elements.note.value = ''
   }
 
-  showKey(e) {
+  getKey(e) {
     const input = e.target.value
     const character = input[input.length-1]
 
@@ -92,34 +99,21 @@ class AddNote extends React.Component {
     }
 
     if(character === ' ' && this.recording){
-
       this.recording = false
-
-      console.log('in showKey function', this.hashWord)
       this.startAddHashWord(this.hashWord)
-      //now i think the idea is to actually print out the new hashWord to the screen
-      // this.setState(() => ({
-      //   newHashWord: this.hashWord
-      // }))
       this.hashWord = ''
-
     }
 
     if(this.recording){
       this.hashWord += character
     }
-
-
   }
 
   render() {
     return (
       <div>
         <form onSubmit={this.addNote}>
-          {/*could i add further improvement by only firing onkeydown if recording?
-            probably not worth it to fuck around with that too much right now just because i'm still needing to figure out the structure of the app and what it's really gonna do
-            */}
-          <textarea name="note" onKeyDown={this.showKey}/>
+          <textarea name="note" onKeyDown={this.getKey}/>
           <br />
           <button type="submit">add</button>
         </form>
