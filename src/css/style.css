@@ -18,5 +18,6 @@ textarea {
 .hash-word {
   color: #ffa751;
   margin-right: 8px;
+  margin-bottom: 4px;
   font-size: .9em;
-  display: inline; }
+  display: inline-block; }

@@ -15,35 +15,35 @@ class TangerineNotes extends React.Component {
   constructor(props){
     super(props)
     this.addHashWord = this.addHashWord.bind(this)
-
+    this.addNote = this.addNote.bind(this)
     this.state = {
       notes: [
-        {
-          id: 0,
-          content: 'this is a note',
-          tags: [
-            '#yoga',
-            '#thirdeye',
-            '#health'
-          ]
-        },
-        {
-          id: 1,
-          content: 'this is another note',
-          tags: [
-            '#chillin',
-            '#weekend'
-          ]
-        },
-        {
-          id: 2,
-          content: 'this is the final note',
-          tags: [
-            '#weed',
-            '#drank',
-            '#sleep'
-          ]
-        }
+        // {
+        //   id: 0,
+        //   content: 'this is a note',
+        //   tags: [
+        //     '#yoga',
+        //     '#thirdeye',
+        //     '#health'
+        //   ]
+        // },
+        // {
+        //   id: 1,
+        //   content: 'this is another note',
+        //   tags: [
+        //     '#chillin',
+        //     '#weekend'
+        //   ]
+        // },
+        // {
+        //   id: 2,
+        //   content: 'this is the final note',
+        //   tags: [
+        //     '#weed',
+        //     '#drank',
+        //     '#sleep'
+        //   ]
+        // }
       ],
       hashedWords: [
         '#yoga',
@@ -53,8 +53,15 @@ class TangerineNotes extends React.Component {
     }
   }
 
-  addNote(note){
+  addNote(note, hashWords){
     console.log('in addNote', note)
+    this.setState((prevState) => ({
+      notes: prevState.notes.concat({
+        id: Math.random(),
+        content: note,
+        tags: hashWords
+      })
+    }))
   }
 
   addHashWord(hashWord) {
@@ -79,23 +86,28 @@ class TangerineNotes extends React.Component {
               <NoteForm addHashWord={this.addHashWord} addNote={this.addNote}/>
             </div>
             <div className="columns six">
-              {this.state.hashedWords.map((hashWord) => (
-                <p key={hashWord} className="hash-word">{hashWord}</p>
-              ))}
+              {
+                this.state.hashedWords.map((hashWord) => (
+                  <p key={hashWord} className="hash-word">{hashWord}</p>
+                ))
+              }
             </div>
           </div>
           <div className="row">
-            {this.state.notes.map((note) => (
-              <div key={note.id}>
-                <p><b>id:</b> {note.id} | <b>content:</b> {note.content}</p>
-                {note.tags.map((tag, index) => (
-                  <p key={index}>
-                    {tag}
-                  </p>
-                ))}
-              </div>
-            ))}
-
+            {
+              this.state.notes.map((note) => (
+                <div key={note.id}>
+                  <p><b>id:</b> {note.id} | <b>content:</b> {note.content}</p>
+                  {
+                    note.tags.map((tag, index) => (
+                      <p key={index}>
+                        {tag}
+                      </p>
+                    ))
+                  }
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
