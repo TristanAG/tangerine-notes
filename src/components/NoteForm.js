@@ -18,6 +18,7 @@ class NoteForm extends React.Component {
     this.props.addHashWord(hashWord)
   }
 
+
   startAddNote(e) {
     e.preventDefault()
     const note = e.target.elements.note.value;
@@ -26,29 +27,43 @@ class NoteForm extends React.Component {
   }
 
   getKey(e) {
-    const input = e.target.value
-    const character = input[input.length-1]
-
-    if(character === '#' && !this.recording){
+    const key = e.key
+    if(key === '#' && !this.recording){
       this.recording = true
-    }
-
-    if(character === ' ' && this.recording){
+      console.log('start recording')
+    } else if(key === ' ' && this.recording){
       this.recording = false
-      this.startAddHashWord(this.hashWord)
-      this.hashWord = ''
+      console.log('stop recording')
+      console.log(this.hashWord)
     }
 
     if(this.recording){
-      this.hashWord += character
+      this.hashWord += key
+      console.log('recording')
     }
+    // const input = e.target.value
+    // const character = input[input.length-1]
+    //
+    // if(character === '#' && !this.recording){
+    //   this.recording = true
+    // }
+    //
+    // if(character === ' ' && this.recording){
+    //   this.recording = false
+    //   this.startAddHashWord(this.hashWord)
+    //   this.hashWord = ''
+    // }
+    //
+    // if(this.recording){
+    //   this.hashWord += character
+    // }
   }
 
   render() {
     return (
       <div>
         <form onSubmit={this.startAddNote}>
-          <textarea name="note" onKeyDown={this.getKey}/>
+          <textarea name="note" onKeyPress={this.getKey}/>
           <br />
           <button type="submit">add</button>
         </form>
