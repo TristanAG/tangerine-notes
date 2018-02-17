@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Header from './components/Header'
+import NoteForm from './components/NoteForm'
+import Note from './components/Note'
 import './css/normalize.css';
 import './css/skeleton.css';
 import './css/style.css';
 import registerServiceWorker from './registerServiceWorker';
 // import App from './App';
-
 
 
 
@@ -15,12 +17,44 @@ class TangerineNotes extends React.Component {
     this.addHashWord = this.addHashWord.bind(this)
 
     this.state = {
+      notes: [
+        {
+          id: 0,
+          content: 'this is a note',
+          tags: [
+            '#yoga',
+            '#thirdeye',
+            '#health'
+          ]
+        },
+        {
+          id: 1,
+          content: 'this is another note',
+          tags: [
+            '#chillin',
+            '#weekend'
+          ]
+        },
+        {
+          id: 2,
+          content: 'this is the final note',
+          tags: [
+            '#weed',
+            '#drank',
+            '#sleep'
+          ]
+        }
+      ],
       hashedWords: [
         '#yoga',
         '#thirdeye',
         '#health'
       ]
     }
+  }
+
+  addNote(note){
+    console.log('in addNote', note)
   }
 
   addHashWord(hashWord) {
@@ -42,7 +76,7 @@ class TangerineNotes extends React.Component {
           </div>
           <div className="row">
             <div className="columns six">
-              <AddNote addHashWord={this.addHashWord}/>
+              <NoteForm addHashWord={this.addHashWord} addNote={this.addNote}/>
             </div>
             <div className="columns six">
               {this.state.hashedWords.map((hashWord) => (
@@ -50,79 +84,24 @@ class TangerineNotes extends React.Component {
               ))}
             </div>
           </div>
+          <div className="row">
+            {this.state.notes.map((note) => (
+              <div key={note.id}>
+                <p><b>id:</b> {note.id} | <b>content:</b> {note.content}</p>
+                {note.tags.map((tag, index) => (
+                  <p key={index}>
+                    {tag}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+          </div>
         </div>
       </div>
     )
   }
 }
-
-
-const Header = () => (
-  <header>
-    <div className="container">
-      <a href="http://tristangruener.com">tristangruener.com</a>
-    </div>
-    <hr />
-  </header>
-)
-
-class AddNote extends React.Component {
-  constructor(props){
-    super(props)
-    this.getKey = this.getKey.bind(this)
-    this.startAddHashWord = this.startAddHashWord.bind(this)
-    this.hashWord = ''
-    this.recording = false
-
-    this.state = {
-      newHashWord: ''
-    }
-  }
-
-  startAddHashWord(hashWord) {
-    this.props.addHashWord(hashWord)
-  }
-
-  addNote(e) {
-    e.preventDefault()
-    const note = e.target.elements.note.value;
-    console.log(note)
-    e.target.elements.note.value = ''
-  }
-
-  getKey(e) {
-    const input = e.target.value
-    const character = input[input.length-1]
-
-    if(character === '#' && !this.recording){
-      this.recording = true
-    }
-
-    if(character === ' ' && this.recording){
-      this.recording = false
-      this.startAddHashWord(this.hashWord)
-      this.hashWord = ''
-    }
-
-    if(this.recording){
-      this.hashWord += character
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        <form onSubmit={this.addNote}>
-          <textarea name="note" onKeyDown={this.getKey}/>
-          <br />
-          <button type="submit">add</button>
-        </form>
-      </div>
-    )
-  }
-}
-
-
 
 ReactDOM.render(<TangerineNotes />, document.getElementById('root'));
 registerServiceWorker();
