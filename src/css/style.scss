@@ -37,12 +37,16 @@ textarea{
 .note-preview{
   // border: 1px solid lighten(#bbb, 14%);
   border-radius: 3px;
-  padding-left: 9px;
+
   padding-top: 3px;
   margin-bottom: 8px;
   p{
     margin-bottom: 4px;
   }
+}
+
+#hashtag-banner{
+  // background-color: darken($link-color, 18%);
 }
 
 #main-nav{

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link } from 'react-router-dom'
-import Header from './components/Header'
+
+import HomepageHeader from './components/HomepageHeader'
 import NoteForm from './components/NoteForm'
 import Note from './components/Note'
 import HashWordList from './components/HashWordList'
@@ -10,16 +10,6 @@ import './css/skeleton.css';
 import './css/style.css';
 import registerServiceWorker from './registerServiceWorker';
 // import App from './App';
-
-//i think i need to be done with this particular experiment... I want it to be cleaner
-//do I want to move forward withthis thing at all? What if it was actually something cool... what woud be essential?
-
-//the most essential thing would be a clean minimal interface to write notes.
-//as you add hashtags, they appear on the side
-//when you save notes you can view a backlog of all your note history
-//you can filter your notes by date or tag.
-
-//add button only appears if there is text that can be saved
 
 class TangerineNotes extends React.Component {
   constructor(props){
@@ -36,33 +26,8 @@ class TangerineNotes extends React.Component {
             '#playstation'
           ]
         }
-        // {
-        //   id: 0,
-        //   content: 'doing #yoga is good for your #health. It helps open your #thirdeye',
-        //   tags: [
-        //     '#yoga',
-        //     '#thirdeye',
-        //     '#health'
-        //   ]
-        // },
-        // {
-        //   id: 1,
-        //   content: 'make sure this #weekend to do some hard #chillin',
-        //   tags: [
-        //     '#chillin',
-        //     '#weekend'
-        //   ]
-        // }
       ],
       hashedWords: [
-        // '#yoga',
-        // '#thirdeye',
-        // '#health',
-        // '#chillin',
-        // '#weekend',
-        // '#weed',
-        // '#drank',
-        // '#sleep'
         '#crystal',
         '#playstation'
       ]
@@ -90,71 +55,31 @@ class TangerineNotes extends React.Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <div className="columns eight">
-            <NoteForm addHashWord={this.addHashWord} addNote={this.addNote}/>
-          </div>
-          <div className="columns four">
+        <HomepageHeader/>
+        <div className='container' style={{marginTop: '23px'}}>
+          <center>
+            <h4>e c c o  n o t e</h4>
             <HashWordList hashedWords={this.state.hashedWords} />
-          </div>
+          </center>
         </div>
-        <div className="row">
-          <Note notes={this.state.notes} />
+        <div className="container" style={{ marginTop: "15px"}}>
+          <div className="row">
+            <div className="columns eight">
+              <NoteForm addHashWord={this.addHashWord} addNote={this.addNote}/>
+            </div>
+            <div className="columns four">
+
+            </div>
+          </div>
+          <div className="row">
+            <Note notes={this.state.notes} />
+          </div>
         </div>
       </div>
     )
   }
 }
 
-const NotesPage = () => {
-  <div>
-    <div>
-      <div className="row">
-      <h4>e c c o  n o t e</h4>
-      <div id="main-nav">
-        <Link to='/' component={TestPageTwo} className='page-link'>new</Link>
-        <Link to='/notes' component={TestPageTwo} className='page-link'>notes</Link>
-        <Link to='/about' component={TestPageTwo} className='page-link'>about</Link>
-        <HashWordList hashedWords={this.state.hashedWords} />
-      </div>
-      </div>
 
-      <div className="row">
-        <Note notes={this.state.notes} />
-      </div>
-    </div>
-  </div>
-}
-
-const TestPage = () => (
-  <div>this is from my dashboard
-    <Link to='/test' component={TestPageTwo}>testpagetwo</Link>
-  </div>
-)
-
-const TestPageTwo = () => (
-  <div>this is from my page two</div>
-)
-
-const app = (
-  <BrowserRouter>
-    <div>
-      <Header />
-      <div className="container" style={{ marginTop: "15px"}}>
-        <h4>e c c o  n o t e</h4>
-        <div id="main-nav">
-          <Link to='/' component={TestPageTwo} className='page-link'>new</Link>
-          <Link to='/notes' component={TestPageTwo} className='page-link'>notes</Link>
-          <Link to='/about' component={TestPageTwo} className='page-link'>about</Link>
-        </div>
-        <Route path='/' exact={true} component={TangerineNotes} />
-        <Route path='/test' component={TestPageTwo} />
-        <footer>444</footer>
-      </div>
-    </div>
-  </BrowserRouter>
-
-)
-
-ReactDOM.render(app, document.getElementById('root'));
+ReactDOM.render(<TangerineNotes/>, document.getElementById('root'));
 registerServiceWorker();

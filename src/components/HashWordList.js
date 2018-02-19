@@ -10,7 +10,7 @@ const HashWordList = ({ hashedWords }) => (
 
   //ok, so the hashword should render with the date added, and it should also not have the box
 
-  <div style={{marginTop: '18px'}}>
+  <div style={{marginTop: '18px'}} id='hashtag-banner'>
     {
       hashedWords.slice(0).reverse().map((hashedWord, index) => (
         <p key={index} className="hash-word">
