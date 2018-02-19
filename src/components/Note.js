@@ -1,13 +1,19 @@
 import React from 'react'
+import HashWordList from './HashWordList'
 
-class Note extends React.Component {
-  render() {
-    return (
-      <div>
-        <h4>hi this is a note</h4>
-      </div>
-    )
-  }
-}
+const Note = ({ notes }) => (
+  <div>
+    {
+      notes.slice(0).reverse().map((note) => (
+        <div key={note.id} className='note-preview'>
+          <p className='date'>9 / 9 / 99</p>
+          <p>{note.content}</p>
+          <HashWordList hashedWords={note.tags} />
+          <hr />
+        </div>
+      ))
+    }
+  </div>
+)
 
 export default Note

@@ -15,19 +15,21 @@ class NoteForm extends React.Component {
     }
   }
 
-  //weve got one bug here, but I think that it's with the rendering method up front...
   startAddHashWord(hashWord) {
     this.props.addHashWord(hashWord)
-    this.state.hashWords = this.state.hashWords.concat(hashWord)
-    this.state.hashedWords = []
+    this.setState((prevState) => ({
+      hashWords: prevState.hashWords.concat(hashWord)
+    }))
   }
-
 
   startAddNote(e) {
     e.preventDefault()
     const note = e.target.elements.note.value;
     this.props.addNote(note, this.state.hashWords)
     e.target.elements.note.value = ''
+    this.setState((prevState) => ({
+      hashWords: []
+    }))
   }
 
   //getKey should probably be called something like "build hashword"
@@ -60,9 +62,9 @@ class NoteForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.startAddNote}>
-          <textarea name="note" onKeyPress={this.getKey}/>
+          <textarea name="note" onKeyPress={this.getKey} placeholder="use #tags while you write so #ecconote can be helpful"/>
           <br />
-          <button type="submit">add</button>
+          <button type="submit">save note</button>
         </form>
       </div>
     )

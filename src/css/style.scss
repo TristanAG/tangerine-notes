@@ -1,4 +1,6 @@
-$link-color: #ffa751;
+$link-color: #9595c7;
+
+
 
 a{
   color: $link-color;
@@ -12,21 +14,53 @@ hr{
 }
 
 h4{
-  color: #665d57;
+  color: #023852;
 }
 
 textarea{
   width: 100%;
-  height: 120px;
+  height: 220px;
   &:focus{
     border: 1px solid lighten($link-color, 13%);
   }
 }
 
 .hash-word{
-  color: $link-color;
+  color: darken($link-color, 18%);
+
   margin-right: 8px;
   margin-bottom: 4px;
   font-size: .9em;
   display: inline-block;
+}
+
+.note-preview{
+  // border: 1px solid lighten(#bbb, 14%);
+  border-radius: 3px;
+  padding-left: 9px;
+  padding-top: 3px;
+  margin-bottom: 8px;
+  p{
+    margin-bottom: 4px;
+  }
+}
+
+#main-nav{
+  margin-top: 14px;
+  margin-bottom: 14px;
+
+  .page-link{
+    text-decoration: none;
+    color: darken(#bbb, 8%);
+    border-bottom: 2px solid $link-color;
+    margin-right: 8px;
+
+    cursor: pointer;
+
+    transition: .3s;
+    &:hover{
+      color: darken(#bbb, 24%);
+      border-bottom: 2px solid darken($link-color, 24%);
+    }
+  }
 }
