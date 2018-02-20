@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
-import History from './components/History'
 import About from './components/About'
 import HomepageHeader from './components/HomepageHeader'
 import NoteForm from './components/NoteForm'
@@ -60,9 +59,11 @@ class App extends React.Component {
               <div className='container' style={{marginTop: '23px'}}>
                 <center>
                   <h4>e c c o  n o t e</h4>
-                  <Link to="/">home</Link>
-                  <Link to="/history">history</Link>
-                  <Link to="/about">about</Link>
+                  <div id="main-nav">
+                    <Link to="/" className="page-link">home</Link>
+                    <Link to="/history" className="page-link">history</Link>
+                    <Link to="/about" className="page-link">about</Link>
+                  </div>
                 </center>
               </div>
               <div className="container" style={{ marginTop: "15px"}}>
@@ -73,7 +74,9 @@ class App extends React.Component {
                       <NoteForm addHashWord={this.addHashWord} addNote={this.addNote} />
                     )}
                     />
-                    <Route exact path="/history" component={History} />
+                    <Route exact path="/history" render={() => (
+                      <Note notes={this.state.notes} />
+                    )} />
                     <Route exact path="/about" component={About} />
                   </div>
                   <div className="columns four">
@@ -81,7 +84,7 @@ class App extends React.Component {
                   </div>
                 </div>
                 <div className="row">
-                  <Note notes={this.state.notes} />
+
                 </div>
               </div>
             </div>
