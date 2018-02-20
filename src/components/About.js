@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const History = () => (
+const About = () => (
   <div>
-    <p>History Page</p>
+    <p>About page</p>
   </div>
 )
 
-export default History
+export default About
