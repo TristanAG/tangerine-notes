@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 
 class NoteForm extends React.Component {
   constructor(props){
@@ -11,7 +12,8 @@ class NoteForm extends React.Component {
 
     this.state = {
       newHashWord: '',
-      hashWords: []
+      hashWords: [],
+      toHistory: false
     }
   }
 
@@ -27,8 +29,10 @@ class NoteForm extends React.Component {
     const note = e.target.elements.note.value;
     this.props.addNote(note, this.state.hashWords)
     e.target.elements.note.value = ''
+
     this.setState((prevState) => ({
-      hashWords: []
+      hashWords: [],
+      toHistory: true
     }))
   }
 
@@ -59,6 +63,10 @@ class NoteForm extends React.Component {
   }
 
   render() {
+    if(this.state.toHistory === true){
+      return <Redirect to='/history' />
+    }
+
     return (
       <div>
         <form onSubmit={this.startAddNote}>

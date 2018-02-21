@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
+import Moment from 'moment'
 import About from './components/About'
 import HomepageHeader from './components/HomepageHeader'
 import NoteForm from './components/NoteForm'
@@ -33,10 +34,10 @@ class App extends React.Component {
   }
 
   addNote(note, hashWords){
-    console.log('in addNote', note)
     this.setState((prevState) => ({
       notes: prevState.notes.concat({
         id: Math.random(),
+        date: Moment(Date.now()).format('MMM Do, h:mm a'),
         content: note,
         tags: hashWords
       })
