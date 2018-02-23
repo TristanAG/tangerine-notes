@@ -7,13 +7,15 @@ class NoteForm extends React.Component {
     this.getKey = this.getKey.bind(this)
     this.startAddHashWord = this.startAddHashWord.bind(this)
     this.startAddNote = this.startAddNote.bind(this)
+    this.checkNote = this.checkNote.bind(this)
     this.hashWord = ''
     this.recording = false
 
     this.state = {
       newHashWord: '',
       hashWords: [],
-      toHistory: false
+      toHistory: false,
+      active: false
     }
   }
 
@@ -29,19 +31,23 @@ class NoteForm extends React.Component {
     const note = e.target.elements.note.value;
     this.props.addNote(note, this.state.hashWords)
     e.target.elements.note.value = ''
-
     this.setState((prevState) => ({
       hashWords: [],
       toHistory: true
     }))
   }
 
-  //getKey should probably be called something like "build hashword"
-    //doesn't matter though... it's isolated and works well enough right now
-      //MOST IMPORTANT: how to handle cases where you delete part of the tag and go back?
-        //you know what? this whole thing is kinda flawed if you are not constantly scanning the document
-          //that just feels like it would be so expensive to scan he entire note on each change
-        //there's also the deal with pasting things in... the whole approach would need to be rethought
+  checkNote(e){
+    if(e.target.value.length >= 1){
+      this.setState(() => ({
+        active: true
+      }))
+    }else{
+      this.setState(() => ({
+        active: false
+      }))
+    }
+  }
 
   getKey(e) {
     const key = e.key
@@ -70,9 +76,14 @@ class NoteForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.startAddNote}>
-          <textarea name="note" onKeyPress={this.getKey} placeholder="use #tags while you write so #ecconote can be helpful"/>
+          <textarea
+            name="note"
+            onKeyPress={this.getKey}
+            onKeyUp={this.checkNote}
+            placeholder="use #tags while you write so #ecconote can be helpful"
+          />
           <br />
-          <button type="submit">save note</button>
+          {this.state.active && <button type="submit">save note</button>}
         </form>
       </div>
     )

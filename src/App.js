@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom'
 import Moment from 'moment'
+import MediaQuery from 'react-responsive'
 import About from './components/About'
 import HomepageHeader from './components/HomepageHeader'
 import NoteForm from './components/NoteForm'
@@ -27,6 +28,7 @@ class App extends React.Component {
         }
       ],
       hashedWords: [
+        '#pepsi',
         '#crystal',
         '#playstation'
       ]
@@ -61,13 +63,21 @@ class App extends React.Component {
                 <center>
                   <h4>e c c o  n o t e</h4>
                   <div id="main-nav">
-                    <Link to="/" className="page-link">home</Link>
+                    <Link to="/" className="page-link">new</Link>
                     <Link to="/history" className="page-link">history</Link>
                     <Link to="/about" className="page-link">about</Link>
                   </div>
                 </center>
               </div>
               <div className="container" style={{ marginTop: "15px"}}>
+
+                <MediaQuery maxWidth={550}>
+                  <div className="row" id="hashed-word-list-mobile">
+                    <p>i'm mobile look at me@@</p>
+                    <HashWordList hashedWords={this.state.hashedWords} />
+                  </div>
+                </MediaQuery>
+
                 <div className="row">
                   <div className="columns eight">
                     {/* <NoteForm addHashWord={this.addHashWord} addNote={this.addNote}/> */}
@@ -80,12 +90,11 @@ class App extends React.Component {
                     )} />
                     <Route exact path="/about" component={About} />
                   </div>
-                  <div className="columns four">
-                    <HashWordList hashedWords={this.state.hashedWords} />
-                  </div>
-                </div>
-                <div className="row">
-
+                  <MediaQuery minWidth={550}>
+                    <div className="columns four" id="hashed-word-list-full">
+                      <HashWordList hashedWords={this.state.hashedWords} />
+                    </div>
+                  </MediaQuery>
                 </div>
               </div>
             </div>
